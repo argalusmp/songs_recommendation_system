@@ -2,28 +2,36 @@
 # Laporan Proyek Machine Learning - Vidi Septri Argalus Mp
 
 ## Project Overview
+  
+Dalam era digital saat ini, layanan streaming musik seperti Spotify telah menjadi salah satu platform utama bagi pengguna untuk mendengarkan musik secara online. Namun, dengan begitu banyaknya pilihan lagu yang tersedia, seringkali pengguna merasa kesulitan untuk menemukan lagu-lagu yang sesuai dengan preferensi mereka. Inilah mengapa sistem rekomendasi lagu menjadi sangat penting.
 
-Dalam proyek ini,  bertujuan untuk membangun sistem rekomendasi lagu berdasarkan dataset Spotify. Sistem rekomendasi ini akan membantu pengguna menemukan lagu-lagu yang sesuai dengan preferensi mereka, berdasarkan lagu yang telah mereka dengarkan sebelumnya. Sistem rekomendasi dapat membantu meningkatkan pengalaman mendengarkan musik pengguna.
+Proyek ini bertujuan untuk mengatasi masalah tersebut dengan membangun sistem rekomendasi lagu berdasarkan dataset Spotify. Dengan menggunakan data yang ada, sistem ini akan menganalisis preferensi mendengarkan musik pengguna dan memberikan rekomendasi lagu-lagu yang sesuai.
 
-Sistem rekomendasi memiliki dampak yang signifikan terhadap kepuasan user ketika berinteraksi dengan aplikasi, antara lain:
--   Meningkatkan pengalaman mendengarkan musik pengguna.
--   Membantu pengguna menemukan musik baru yang mereka sukai.
--   Memberikan solusi bagi pengguna yang ingin menjelajahi genre musik baru.
+Salah satu permasalahan yang dihadapi oleh pengguna adalah kesulitan dalam menemukan lagu baru yang sesuai dengan selera mereka. Dengan adanya sistem rekomendasi yang baik, pengguna dapat menemukan lagu-lagu baru yang mungkin tidak akan mereka temukan secara manual, meningkatkan kepuasan mereka dalam menggunakan layanan streaming musik.
+
+Contoh konkret dari permasalahan ini adalah ketika pengguna ingin menjelajahi genre musik baru atau menemukan lagu-lagu serupa dengan yang sedang mereka dengarkan. Dengan sistem rekomendasi yang efektif, pengguna dapat dengan mudah menemukan lagu-lagu yang sesuai dengan preferensi mereka tanpa harus melakukan pencarian manual yang rumit.
+
+Hasil dari proyek ini diharapkan dapat diterapkan secara langsung kepada pengguna aplikasi streaming musik, membantu mereka menemukan lagu-lagu baru yang mereka sukai dan meningkatkan pengalaman mendengarkan musik mereka secara keseluruhan.
+
 
 ## Business Understanding
 
 ### Problem Statements
 1.  Pengguna kesulitan menemukan lagu baru yang sesuai dengan selera mereka.
-2.  Pengguna ingin menjelajahi genre musik baru, tetapi tidak tahu harus mulai dari mana.
-3.  Pengguna ingin mendapatkan rekomendasi lagu yang dipersonalisasi.
+2.  Pengguna ingin menjelajahi genre musik baru, tetapi tidak tahu harus mulai dari mana dan ingin rekomendasi yang dipersonalisasi.
 
 ### Goals
 1.  Mengembangkan sistem rekomendasi lagu yang dapat memberikan rekomendasi yang relevan dan personal kepada pengguna.
-2.  Meningkatkan retensi pengguna dan kepuasan pelanggan dengan meningkatkan kualitas rekomendasi lagu.
+2.  Meningkatkan retensi pengguna dan kepuasan pelanggan dengan meningkatkan kualitas rekomendasi lagu dengan rekomendasi yang membantu pengguna dalam eksplorasi genre musik baru serta dipersonalisasi.
 
 ### Solution Approach
 ####  Solution statements
-Mengimplementasikan *content-based filtering* untuk memperkuat rekomendasi dengan mempertimbangkan fitur lagu seperti  tempo dan *valence*.
+1.  Mengimplementasikan *content-based filtering* untuk memperkuat rekomendasi dengan mempertimbangkan fitur lagu seperti tempo dan valence.
+2.  Meningkatkan kualitas rekomendasi dengan memanfaatkan algoritma yang dapat mempelajari pola preferensi pengguna dari interaksi sebelumnya sehingga memberikan rekomendasi yang lebih sesuai.
+
+Dengan mengadopsi pendekatan *content-based filtering*, sistem rekomendasi akan dapat memberikan rekomendasi yang lebih relevan dengan menganalisis fitur-fitur intrinsik dari lagu-lagu yang telah didengarkan oleh pengguna. Selain itu, dengan memanfaatkan algoritma yang dapat mempelajari pola preferensi pengguna, sistem ini akan dapat memberikan rekomendasi yang semakin dipersonalisasi seiring waktu, meningkatkan retensi pengguna dan kepuasan pelanggan.
+
+Stakeholder utama dari proyek ini adalah pengguna layanan streaming musik, yang akan mendapatkan manfaat langsung dari rekomendasi lagu yang lebih relevan dan personal. Selain itu, platform streaming musik juga akan mendapatkan manfaat dengan meningkatnya retensi pengguna dan kepuasan pelanggan, yang pada waktunya akan dapat meningkatkan loyalitas pengguna dan pendapatan platform. Dengan memperbaiki kualitas rekomendasi lagu, proyek ini diharapkan dapat memberikan dampak positif bagi bisnis dan ekonomi secara keseluruhan.
 
 ## Data Understanding
 Data yang digunakan adalah dataset Spotify yang berisi informasi tentang lagu-lagu, termasuk nama lagu, artis, genre, dan fitur audio seperti *danceability*, *energy*, dan *valence*. Dataset ini diambil dari Kaggle: [Spotify Dataset](https://www.kaggle.com/datasets/joebeachcapital/30000-spotify-songs/data).
@@ -78,7 +86,6 @@ Tabel 1. Lagu yang paling menyebarkan nilai positive
 |12710|The Doobie Brothers|Minute By Minute|Soft Rock Drive|rock|0\.985|
 |26302|1986 Omega Tribe|Crystal Night|Japanese Funk/Soul/NEO/Jazz/Acid|r&b|0\.984|
 |31680|Soulsearcher|Can't Get Enough|House/Electro/Progressive/Disco/Lofi/Synthwave|edm|0\.983|
-
 Berdasarkan Tabel 1, lagu *rock, r&b* memiliki suasana lagu yang dapat menyebarkan vibes positive terhadap pendengarnya.
 
 ## Data Preparation
@@ -118,32 +125,56 @@ Beberapa kolom data untuk pengembangan model ini tidak dibutuhkan sehingga lebih
 -   Melakukan *split* pada *categorical* dan *numerical* kolom data agar kolom numerical dapat digunakan untuk model.
 
 ## Modeling
+
+Dalam memilih algoritma/model untuk menyelesaikan permasalahan yang diangkat pada proyek ini akan menggunakan *cosine similarity* dan *content-based filtering*. Alasan utama penggunaan *cosine similarity* adalah karena metode ini cocok untuk sistem rekomendasi berbasis konten, di mana kita ingin menemukan kesamaan antara item berdasarkan fitur-fitur atau karakteristik intrinsiknya. Dalam konteks ini, kita ingin merekomendasikan lagu-lagu yang mirip berdasarkan fitur-fitur seperti tempo, valence, dan genre.
+
+Selain itu, *cosine similarity* juga memiliki keunggulan dalam menangani data berdimensi tinggi dan tidak rentan terhadap perubahan skala, sehingga cocok untuk data musik yang biasanya memiliki banyak fitur numerik.
+
+Penggunaan *content-based filtering* juga memberikan keleluasaan dalam membuat rekomendasi yang lebih dipersonalisasi untuk pengguna, tanpa memerlukan data historis interaksi dari pengguna. Hal ini menjadikan *content-based filtering* sebagai pilihan yang sesuai untuk proyek ini, di mana kita ingin memberikan rekomendasi yang relevan berdasarkan fitur-fitur intrinsik lagu.
+
+Dengan demikian, penggunaan *cosine similarity* dan *content-based filtering* dipilih karena kecocokannya dengan karakteristik data dan kebutuhan proyek, serta kemampuannya untuk memberikan rekomendasi yang lebih relevan dan dipersonalisasi kepada pengguna.
+
 Dalam membangun rekomendasi sistem nya, melakukan `cosine_similarity()`  terhadap data numerical, setelah itu menambahkan satu kolom baru sebagai penanda index baris unik pada setiap baris data menggunakan `LabelEncoder()`. 
 
-Setelah itu membuat satu function untuk memanggil rekomendasi lagunya, dengan beberapa pengkondisian seperti apakah hanya merekomendasikan genre lagu yang sama atau tidak dan juga menentukan jumlah rekomendasi yang diberikan.
-
-Berikut hasil dari rekomendasi terhadap lagu 'Someone You Loved - Future Humans Remix' : 
-
-|index|Artist|Song|Genre|
-|---|---|---|---|
-|0|Hardwell|Baldadig|latin|
-|1|La Fouine|Terminus|r&b|
-|2|Green Tea|People Be Watchin|r&b|
-|3|ICEHOUSE|Great Southern Land - Remastered|pop|
-|4|Sammy Milo|Eine Keine Meine|edm|
-|5|Ram Jam|Black betty|rock|
-|6|Depeche Mode|Get The Balance Right\! - Combination Mix|pop|
-|7|Kurdo|Mike Tyson - Bonustrack|rap|
-|8|Jessica Reedy|God Has Smiled On Me|r&b|
-|9|Rick Ross|The Devil Is A Lie|rap|
-
-## Evaluation
-Metric yang digunakan untuk membangun model ini adalah cosine similarity dimana menemukan kemiripan antar nilai vector pada data, disini model dibangun atas cosine similarity terhadap data-data numerical seperti '*track_popularity', 'danceability', 'energy', 'key', 'loudness',  'mode', 'speechiness', 'acousticness', 'instrumentalness', 'liveness',  'valence', 'tempo'*. Sehingga ini akan menghasilkan rekomendasi lagu-lagu yang memiliki kedekatan atau kemiripan dengan nilai-nilai vector lagu yang di-input atau sedang didengarkan oleh pengguna.
-
 Rumus untuk cosine similarity antara dua vektor **A** dan **B** dapat ditulis sebagai berikut:
-![](https://miro.medium.com/v2/resize:fit:1400/1*LfW66-WsYkFqWc4XYJbEJg.png)
+
+$$cos(\theta) =  \frac{A . B} {||A|| .||B||} = \frac{
+\sum_{i=1}^n A_i B_i }{  \sum_{i=1}^n A_i^2   \sum_{i=1}^n B_i^2 }
+$$
+
 Di sini:
 -   A dan B adalah dua vektor yang ingin dibandingkan.
 -   ⋅ adalah operator dot product (produk dot) antara vektor A dan B.
 
-Secara keseluruhan model dapat menyelesaikan dan memberikan solusi terhadap permasalahan pengguna dengan memberikan rekomendasi lagu berdasarkan lagu yang sedang didengar oleh pengguna dengan lebih relevan untuk diputar selanjutnya.
+Setelah itu membuat satu function untuk memanggil rekomendasi lagunya, dengan beberapa pengkondisian seperti apakah hanya merekomendasikan genre lagu yang sama atau tidak dan juga menentukan jumlah rekomendasi yang diberikan.
+
+Berikut hasil dari rekomendasi terhadap lagu 'City Of Lights - Official Radio Edit' : 
+
+|index|Artist|Song|Genre|
+|---|---|---|---|
+|0|Bro Safari|Drama \(Party Favor Remix\)|edm|
+|1|Incubite|Glowstix, Neon & Blood|pop|
+|2|Lucky Luke|E\.B\.Y\.T\.|edm|
+|3|Javiera Mena|Acá Entera|pop|
+|4|Getfar|Shining Star \(Vocal Mix\)|edm|
+
+## Evaluation
+### Formula Metrik Evaluasi: Precision
+
+Precision dalam konteks content-based filtering dapat dihitung dengan rumus berikut:
+
+$$Precision=\frac{Jumlah rekomendasi yang relevan} {Jumlah total rekomendasi}​$$
+
+Dalam konteks sistem rekomendasi lagu berbasis konten, rekomendasi yang relevan adalah lagu-lagu yang memiliki kemiripan tinggi dengan lagu yang sedang didengarkan atau dipilih oleh pengguna. Jumlah total rekomendasi adalah jumlah lagu yang direkomendasikan oleh sistem.
+
+### Hasil Metrik Evaluasi
+
+Dengan menggunakan metrik precision, dapat mengevaluasi seberapa baik sistem rekomendasi lagu berbasis konten dalam memberikan rekomendasi yang relevan kepada pengguna. Hasil evaluasi metrik precision yang tinggi menunjukkan bahwa sistem rekomendasi mampu memberikan rekomendasi lagu yang sesuai dengan preferensi pengguna.
+
+Dalam konteks proyek ini, hasil dari metric precision diperoleh dari 2 pengujian, yang pertama menggunakan perbandingan total jumlah nilai dari kolom *'danceability',  'energy',  'loudness',  'mode',  'speechiness', 'acousticness',  'instrumentalness',  'liveness',  'valence',  'tempo'*  pada data inputan pengguna dengan total jumlah nilai dari kolom yang sama pada setiap hasil rekomendasi sistem. 
+
+Nilai total dari kolom-kolom tersebut pada lagu *'City Of Lights - Official Radio Edit'* adalah 129.153 dan nilai pada hasil rekomendasi secara berurut adalah 99.964975,  126.817183, 123.111700, 117.229400 dan 124.741140. Dengan menetapkan suatu threshold sebagai pertimbangan selisih sebesar 15, maka  4 dari 5 rekomendasi yang diberikan cukup sesuai dengan data (80% rekomendasi). 
+
+Pengujian lainnya menggunakan kecocokan genre lagu yang dihasilkan oleh rekomendasi sistem dengan genre lagu inputan pengguna. Pada kasus ini lagu *City Of Lights - Official Radio Edit* ber-genre edm dan hasil rekomendasi 3 dari 5 menampilkan lagu dengan genre edm.
+
+Secara keseluruhan model dapat menyelesaikan dan memberikan solusi terhadap permasalahan pengguna dengan memberikan rekomendasi lagu berdasarkan lagu yang sedang didengar oleh pengguna dan personalisasi serta lebih relevan untuk diputar selanjutnya sehingga memenuhi *goals* atau tujuan dari proyek ini.
